@@ -1,0 +1,28 @@
+﻿@page "/categoria/crear"
+@using RestauranteAsemmbly.Models
+@using RestauranteAsemmbly.Servicios.Interfaces
+@inject ICategoriaService _categoriaService
+@inject NavigationManager Navigation
+
+<h3>Crear Nueva Categoría</h3>
+
+<div>
+    <label for="nombre">Nombre de la categoría:</label>
+    <input type="text" id="nombre" @bind="categoria.nombre" />
+
+    <label for="descripcion">Descripción:</label>
+    <textarea id="descripcion" @bind="categoria.descripcion"></textarea>
+
+  
+    <a href="/categoria/categorias" @onclick="CrearCategorias">Guardar Categoría</a>
+</div>
+
+@code {
+    private Categoria categoria = new Categoria();
+
+    private async Task CrearCategorias()
+    {
+        await _categoriaService.CrearCategoriaAsync(categoria);
+        Navigation.NavigateTo("/categoria/categorias");
+    }
+}

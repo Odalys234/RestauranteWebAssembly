@@ -1,0 +1,51 @@
+﻿@page "/categoria/categorias"
+@using RestauranteAsemmbly.Models
+@using RestauranteAsemmbly.Servicios.Interfaces
+@inject ICategoriaService _categoriaService
+@inject NavigationManager Navigation  
+
+<h3>Categorías</h3>
+
+@if (categorias == null)
+{
+    <p>No hay datos</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre de Categoría</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var categoria in categorias)
+            {
+                <tr>
+                    <td>@categoria.nombre</td>
+                    <td>@categoria.descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+<a href="/categoria/crear" class="btn btn-primary">Crear Categoría</a>
+
+
+@code {
+    private List<Categoria> categorias;
+
+    protected override async Task OnInitializedAsync()
+    {
+        categorias = await _categoriaService.ObtenerCategoriasAsync();
+    }
+
+
+    private void CrearNuevaCategoria()
+    {
+        Navigation.NavigateTo("/categoria/crear"); 
+    }
+}
